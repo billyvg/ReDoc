@@ -7,6 +7,12 @@ import { BrowserDomAdapter as DOM } from './utils/browser-adapter';
 import { disableDebugTools } from '@angular/platform-browser';
 import { isString } from './utils/helpers';
 
+const Raven = require('raven-js');
+Raven
+  .config('https://3b7cdecebdf8457586786aae6be9ebd8@sentry.io/220523', {
+  })
+  .install();
+
 var bootstrapRedoc;
 if (AOT) {
   bootstrapRedoc = require('./bootstrap').bootstrapRedoc;
@@ -31,6 +37,7 @@ export function init(specUrlOrSpec:string|any, options:any = {}) {
   if (!isString(specUrlOrSpec)) {
     options.spec = specUrlOrSpec;
   }
+  throw new Error('sentry');
   return bootstrapRedoc()
   .then(appRef => {
     moduleRef = appRef;
